@@ -51,7 +51,7 @@ public class Welcome extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+ 
     public void Game(View view) {
         Log.d("Play","button clicked");
 
