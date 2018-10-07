@@ -18,7 +18,7 @@ public class WelcomeView extends View {
 
     public WelcomeView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        myImage = BitmapFactory.decodeResource(getResources(), R.drawable.pacini);
+        myImage = BitmapFactory.decodeResource(getResources(), R.drawable.pacback);
     }
 
     private Bitmap changeBitmapSize(Bitmap bit, int w, int h){
