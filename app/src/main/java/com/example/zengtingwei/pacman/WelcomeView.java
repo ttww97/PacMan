@@ -21,7 +21,7 @@ public class WelcomeView extends View {
         myImage = BitmapFactory.decodeResource(getResources(), R.drawable.pacback);
     }
 
-    private Bitmap changeBitmapSize(Bitmap bit, int w, int h){
+    public Bitmap changeBitmapSize(Bitmap bit, int w, int h){
         int width = bit.getWidth();
         int height = bit.getHeight();
         Log.e("width", "width:" + width);
