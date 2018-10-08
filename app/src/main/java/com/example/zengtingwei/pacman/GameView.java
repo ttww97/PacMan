@@ -1,53 +1,66 @@
 package com.example.zengtingwei.pacman;
 
+import android.app.AppComponentFactory;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
 
-public class GameView extends View implements Runnable, View.OnTouchListener {
+public class GameView extends View implements Runnable {
 
     ArrayList<GameOver> observers;
     Bitmap pacman;
-    Bitmap pacman1, pacman2, pacman3, pacTemp;
-    Canvas c;
     Paint paint;
     float pacX = 100;
     float pacY = 100;
-    String s = "Left";
+    Directions direction = Directions.RIGHT;
+    Player player;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.setOnTouchListener(this);
+//        this.setOnTouchListener(this);
         observers = new ArrayList<>();
         pacman = BitmapFactory.decodeResource(getResources(), R.drawable.pacman);
+        player = new Player(pacman, pacX, pacY);
     }
 
+    public void setString(Directions direction){
+        this.direction = direction;
+        this.invalidate();
+    }
+
+
     @Override
-    public void onDraw(Canvas canvas){
+    public void onDraw(Canvas canvas) {
         Paint p = new Paint();
-        pacman = changeBitmapSize(pacman, 75,75);
-        Bitmap pacman1 = rotate(pacman,90);
-        Bitmap pacman2 = rotate(pacman,180);
-        Bitmap pacman3 = rotate(pacman, 270);
-        if (s == "Right")
+        pacman = changeBitmapSize(pacman, 75, 75);
+        if (direction == Directions.RIGHT) {
+            pacX += 50;
             canvas.drawBitmap(pacman, pacX,pacY,p);
-        else if (s == "Up")
-            canvas.drawBitmap(pacman1,pacX,pacY,p);
-        else if (s == "Left")
-            canvas.drawBitmap(pacman2, pacX,pacY,p);
-        else
-            canvas.drawBitmap(pacman3, pacX,pacY,p);
         }
+        else if (direction == Directions.UP){
+            pacY -= 50;
+            canvas.drawBitmap(pacman,pacX,pacY,p);
+        }
+        else if (direction == Directions.LEFT){
+            pacX -= 50;
+            canvas.drawBitmap(pacman, pacX,pacY,p);
+        }
+        else if (direction == Directions.DOWN){
+            pacY += 50;
+            canvas.drawBitmap(pacman, pacX,pacY,p);
+        }
+    }
 
     private void notifyGameOver() {
         for (GameOver o : observers) o.gameOver();
@@ -95,27 +108,27 @@ public class GameView extends View implements Runnable, View.OnTouchListener {
         return bit;
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-            if(motionEvent.getX() < 300){
-                pacX -= 50;
-                s = "Left";
-            }
-            else if(motionEvent.getX() > 800){
-                pacX += 50;
-                s = "Right";
-            }
-            else if (motionEvent.getY() > pacY){
-                pacY += 50;
-                s = "Up";
-            }
-            else{
-                pacY -= 50;
-                s = "Down";
-            }
-        }
-        this.invalidate();
-        return true;
-    }
+//    @Override
+//    public boolean onTouch(View view, MotionEvent motionEvent) {
+//        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+//            if(motionEvent.getX() < 300){
+//                pacX -= 50;
+//                s = "Left";
+//            }
+//            else if(motionEvent.getX() > 800){
+//                pacX += 50;
+//                s = "Right";
+//            }
+//            else if (motionEvent.getY() > pacY){
+//                pacY += 50;
+//                s = "Up";
+//            }
+//            else{
+//                pacY -= 50;
+//                s = "Down";
+//            }
+//        }
+//        this.invalidate();
+//        return true;
+//    }
 }
