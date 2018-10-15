@@ -16,21 +16,6 @@ public class Agent {
         this.y = y;
     }
 
-    public void moveUp() {
-        y -= 50;
-    }
-
-    public void moveRight() {
-        x += 50;
-    }
-
-    public void moveDown() {
-        y += 50;
-    }
-
-    public void moveLeft(){
-        x -= 50;
-    }
 
     public Bitmap changeBitmapSize(Bitmap bit, int w, int h){
         int width = bit.getWidth();
@@ -59,14 +44,6 @@ public class Agent {
         Paint ghost = new Paint();
         bitmap = changeBitmapSize(bitmap, 50,50);
         canvas.drawBitmap(bitmap, x, y, ghost);
-    }
-
-    public Bitmap rotate(Bitmap bitmap, int angle){
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-
-        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-        return bitmap;
     }
 
 }

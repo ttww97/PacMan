@@ -35,14 +35,12 @@ public class GameView extends View implements Runnable {
     Directions direction = Directions.RIGHT;
     Player player;
     Handler timer;
-    int count1 = 0;
     int score = 0;
     int beanNo = 100;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         observers = new ArrayList<>();
-        pacman = BitmapFactory.decodeResource(getResources(), R.drawable.pacman);
         player = new Player(50, 50);
         timer = new Handler();
         timer.postDelayed(this,10);

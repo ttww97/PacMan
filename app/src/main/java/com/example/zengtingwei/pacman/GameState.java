@@ -67,6 +67,7 @@ public class GameState {
         }
         return false;
     }
+
     static public Directions generateDirection(float agent_x,float agent_y,float pac_x,float pac_y,Layout map){
         double min = 5000000;
         Directions direction= Directions.RIGHT;
