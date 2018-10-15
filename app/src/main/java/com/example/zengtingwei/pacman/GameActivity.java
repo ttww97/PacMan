@@ -23,28 +23,28 @@ public class GameActivity extends AppCompatActivity implements GameOver {
     @Override
     public void gameOver() {
         Log.d("game","Game end");
-        Intent intent = new Intent(GameActivity.this, EndActivity.class);
+        Intent intent = new Intent(this, EndActivity.class);
         startActivity(intent);
     }
 
     public void goUp(View view){
         directions = Directions.UP;
-        gameView.setString(directions);
+        gameView.setMove(directions);
     }
 
     public void goRight(View view){
         directions = Directions.RIGHT;
-        gameView.setString(directions);
+        gameView.setMove(directions);
     }
 
     public void goDown(View view){
         directions = Directions.DOWN;
-        gameView.setString(directions);
+        gameView.setMove(directions);
     }
 
     public void goLeft(View view){
         directions = Directions.LEFT;
-        gameView.setString(directions);
+        gameView.setMove(directions);
     }
 
 }
