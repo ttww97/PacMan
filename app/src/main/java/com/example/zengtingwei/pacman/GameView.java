@@ -23,39 +23,34 @@ import java.util.ArrayList;
 public class GameView extends View implements Runnable {
 
     ArrayList<GameOver> observers;
-    private int speed = 5;
+    private int speed = 1;
     private int count=0;
-    Bitmap pacman;
     Paint paint;
-    Agent ghost1 = new Agent(50,950);
-    Agent ghost2 = new Agent(1300,950);
+    Agent ghost1 = new Agent(1,17);
+    Agent ghost2 = new Agent(26,19);
     Bitmap g1 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost1);
     Bitmap g2 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost2);
     Layout map= new Layout();
     Directions direction = Directions.RIGHT;
     Player player;
     Handler timer;
-    int count1 = 0;
     int score = 0;
     int beanNo = 100;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         observers = new ArrayList<>();
-        pacman = BitmapFactory.decodeResource(getResources(), R.drawable.pacman);
-        player = new Player(50, 50);
+        player = new Player(1,1);
         timer = new Handler();
         timer.postDelayed(this,10);
     }
 
     public void setMove(Directions direction){
         this.direction = direction;
-        int idx_j = (int)GameState.getNextX(player.x,direction)/50;
-        int idx_i = (int)GameState.getNextY(player.y,direction)/50;
         if (GameState.isMoveLegal(player.x,player.y,map,direction)){
             player.x = GameState.getNextX(player.x,direction);
             player.y = GameState.getNextY(player.y,direction);
-            score += GameState.getScore(idx_i,idx_j,map);
+            score += GameState.getScore(player.x,player.y,map);
             beanNo = GameState.getBeanNum(map);
         }
         this.invalidate();
@@ -80,10 +75,10 @@ public class GameView extends View implements Runnable {
         for(int i=0;i<map.wall.length;i++){
             for(int j=0;j<map.wall[i].length;j++){
                 if(map.wall[i][j]==2){
-                    canvas.drawCircle(j*50+25,i*50+25,25,p1);
+                    canvas.drawCircle(j*0.036f*canvas.getWidth()+0.018f*canvas.getWidth(),i*0.036f*canvas.getWidth()+0.018f*canvas.getWidth(),0.018f*canvas.getWidth(),p1);
                 }
                 if(map.wall[i][j]==5){
-                    canvas.drawCircle(j*50+25,i*50+25,25,p2);
+                    canvas.drawCircle(j*0.036f*canvas.getWidth()+0.018f*canvas.getWidth(),i*0.036f*canvas.getWidth()+0.018f*canvas.getWidth(),0.018f*canvas.getWidth(),p2);
                 }
             }
         }
@@ -91,8 +86,8 @@ public class GameView extends View implements Runnable {
     private void drawScore(Canvas canvas){
         Paint p = new Paint();
         p.setColor(Color.BLACK);
-        p.setTextSize(100);
-        canvas.drawText("Score："+String.valueOf(score),800,1200,p);
+        p.setTextSize(0.05f*canvas.getWidth());
+        canvas.drawText("Score："+String.valueOf(score),0.75f*canvas.getWidth(),0.85f*canvas.getWidth(),p);
     }
 
     private void drawMap(Canvas canvas){
@@ -101,7 +96,7 @@ public class GameView extends View implements Runnable {
         for(int i=0;i<map.wall.length;i++){
             for(int j=0;j<map.wall[i].length;j++){
                 if(map.wall[i][j]==1){
-                    canvas.drawRect(j*map.wallsize,i*map.wallsize,(j+1)*map.wallsize,(i+1)*map.wallsize,p);
+                    canvas.drawRect(j*map.wallsize*canvas.getWidth(),i*map.wallsize*canvas.getWidth(),(j+1)*map.wallsize*canvas.getWidth(),(i+1)*map.wallsize*canvas.getWidth(),p);
                 }
             }
         }
@@ -117,12 +112,11 @@ public class GameView extends View implements Runnable {
 
     @Override
     public void run() {
-        if(GameState.isGameOver(player.x,player.y,ghost1.x,ghost1.y,beanNo)) {
+        if(GameState.isGameOver(player.x,player.y,ghost1.x,ghost1.y,ghost2.x,ghost2.y,beanNo)) {
             notifyGameOver();
-        }
-        if(!GameState.isGameOver(player.x,player.y,ghost1.x,ghost2.y,beanNo)) {
+        }else {
             count ++;
-            if(count%speed == 0){
+            if(count%(speed*10) == 0){
                 Directions direction1 = GameState.generateDirection(ghost1.x,ghost1.y,player.x,player.y,map);
                 ghost1.x = GameState.getNextX(ghost1.x,direction1);
                 ghost1.y = GameState.getNextY(ghost1.y,direction1);
