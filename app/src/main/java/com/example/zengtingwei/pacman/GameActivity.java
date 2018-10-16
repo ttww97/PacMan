@@ -25,6 +25,7 @@ public class GameActivity extends AppCompatActivity implements GameOver {
         Log.d("game","Game end");
         Intent intent = new Intent(this, EndActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
     public void goUp(View view){
