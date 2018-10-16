@@ -18,5 +18,6 @@ public class WelcomeActivity extends AppCompatActivity {
         Log.d("game", "Game start");
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+        this.finish();
     }
 }

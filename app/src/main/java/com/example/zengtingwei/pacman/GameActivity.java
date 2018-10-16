@@ -26,6 +26,7 @@ public class GameActivity extends AppCompatActivity implements GameOver {
         Intent intent = new Intent(this, EndActivity.class);
         intent.putExtra("score", gameView.score);
         startActivity(intent);
+        this.finish();
     }
 
     public void goUp(View view){

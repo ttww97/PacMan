@@ -15,15 +15,13 @@ public class EndActivity extends AppCompatActivity {
         Intent it = getIntent();
     }
 
-    public void restart(View view){
-        Log.d("Restart", "Game restart");
-        Intent it = new Intent(this, GameActivity.class);
-        startActivity(it);
-    }
-
     public void menu(View view){
         Log.d("Menu", "Return to menu");
         Intent it = new Intent(this, WelcomeActivity.class);
         startActivity(it);
+    }
+
+    public void exit(View view) {
+        this.finish();
     }
 }
