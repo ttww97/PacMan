@@ -12,6 +12,7 @@ public class EndActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
+        Intent it = getIntent();
     }
 
     public void restart(View view){

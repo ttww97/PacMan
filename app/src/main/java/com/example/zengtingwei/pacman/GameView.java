@@ -103,7 +103,9 @@ public class GameView extends View implements Runnable {
     }
 
     private void notifyGameOver() {
-        for (GameOver o : observers) o.gameOver();
+        for (GameOver o : observers) {
+            o.gameOver();
+        }
     }
 
     public void registerGameOver(GameOver gameOver) {
