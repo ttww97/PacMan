@@ -3,6 +3,7 @@ package com.example.zengtingwei.pacman;
 import android.graphics.Path;
 
 public class GameState {
+    static boolean win = true;
     public GameState(){
 
     }
@@ -59,12 +60,15 @@ public class GameState {
 
     static public boolean isGameOver(int x,int y,int b_x,int b_y,int c_x, int c_y, int bean_num){
         if(bean_num==0){
+            win = true;
             return true;
         }
         if(b_x == x && b_y == y){
+            win = false;
             return true;
         }
         if(c_x == x && c_y == y){
+            win = false;
             return true;
         }
         return false;

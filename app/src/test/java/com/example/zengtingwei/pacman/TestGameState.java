@@ -24,7 +24,7 @@ public class TestGameState {
     @Test
     public void testMoveLegal(){
         Layout map = new Layout();
-        assertEquals("should get true but have ", true, GameState.isMoveLegal(50, 50, map, Directions.RIGHT));
+        assertEquals("should get true but have ", true, GameState.isMoveLegal(1, 1, map, Directions.RIGHT));
     }
 
     @Test
@@ -35,12 +35,12 @@ public class TestGameState {
 
     @Test
     public void testNextY(){
-        assertEquals("should get 50 but have ", 50f, GameState.getNextY(0, Directions.DOWN));
+        assertEquals("should get 1 but have ", 1, GameState.getNextY(0, Directions.DOWN));
     }
 
     @Test
     public void testNextX(){
-        assertEquals("should get 200 but have ", 200f, GameState.getNextX(150, Directions.RIGHT));
+        assertEquals("should get 200 but have ", 151, GameState.getNextX(150, Directions.RIGHT));
     }
 
     @Test

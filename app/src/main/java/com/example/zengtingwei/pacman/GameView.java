@@ -34,6 +34,7 @@ public class GameView extends View implements Runnable {
     Directions direction = Directions.RIGHT;
     Player player;
     Handler timer;
+    boolean checkWin;
     int score = 0;
     int beanNo = 100;
 
@@ -115,6 +116,7 @@ public class GameView extends View implements Runnable {
     @Override
     public void run() {
         if(GameState.isGameOver(player.x,player.y,ghost1.x,ghost1.y,ghost2.x,ghost2.y,beanNo)) {
+            checkWin = GameState.win;
             notifyGameOver();
         }else {
             count ++;
@@ -136,6 +138,14 @@ public class GameView extends View implements Runnable {
             }
             this.postDelayed(this,100);
         }
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    public boolean getWin(){
+        return checkWin;
     }
 
 }

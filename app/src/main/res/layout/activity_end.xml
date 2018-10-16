@@ -18,22 +18,43 @@
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Menu"
         android:onClick="menu"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="Menu"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.635" />
 
     <Button
         android:id="@+id/button9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50px"
-        android:text="Exit"
+        android:layout_marginTop="32dp"
         android:onClick="exit"
-        app:layout_constraintTop_toBottomOf="@id/button8"
+        android:text="Exit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@id/button8"
         app:layout_constraintRight_toRightOf="@id/button8"
-        app:layout_constraintLeft_toLeftOf="@id/button8"/>
+        app:layout_constraintTop_toBottomOf="@id/button8" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="210dp"
+        android:layout_height="44dp"
+        android:layout_marginLeft="148dp"
+        android:layout_marginTop="276dp"
+        android:text="Score: "
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="178dp"
+        android:layout_height="39dp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="148dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
