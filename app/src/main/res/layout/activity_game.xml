@@ -9,9 +9,10 @@
 
     <com.example.zengtingwei.pacman.GameView
         android:id="@+id/gameView"
-        android:layout_width="0dp"
-        android:layout_height="500dp"
-        tools:layout_editor_absoluteX="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="289dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_editor_absoluteY="0dp" />
 
     <Button
