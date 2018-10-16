@@ -1,7 +1,7 @@
 package com.example.zengtingwei.pacman;
 
 public class Layout {
-    public float wallsize = 50;
+    public float wallsize = 0.036f;
     public final int[][] wall={{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                                  {1,0,2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,2,2,2,5,1},
                                  {1,2,1,1,1,1,2,1,1,1,1,1,2,1,1,2,1,1,1,1,2,1,1,1,1,1,2,1},

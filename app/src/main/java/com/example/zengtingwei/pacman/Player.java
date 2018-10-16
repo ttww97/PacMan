@@ -11,32 +11,15 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 public class Player {
-    float x;
-    float y;
+    int x;
+    int y;
     Directions direction = Directions.RIGHT;
     int startAngle = 45;
     int sweepAngle = 270;
 
-    public Player(float x, float y) {
+    public Player(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-
-
-    public void moveUp() {
-        y -= 50;
-    }
-
-    public void moveRight() {
-        x += 50;
-    }
-
-    public void moveDown() {
-        y += 50;
-    }
-
-    public void moveLeft(){
-        x -= 50;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -50,7 +33,7 @@ public class Player {
         }
 
         Paint pacman = new Paint();
-        pacman.setColor(Color.YELLOW);
-        canvas.drawArc(x, y, x+50,y+50, startAngle + rotate, sweepAngle, true, pacman);
+        pacman.setColor(Color.rgb(255,212,58));
+        canvas.drawArc(x*0.036f*canvas.getWidth(), y*0.036f*canvas.getWidth(), x*0.036f*canvas.getWidth()+0.036f*canvas.getWidth(),y*0.036f*canvas.getWidth()+0.036f*canvas.getWidth(), startAngle + rotate, sweepAngle, true, pacman);
     }
 }

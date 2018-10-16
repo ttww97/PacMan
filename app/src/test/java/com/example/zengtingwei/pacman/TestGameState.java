@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertEquals;
 public class TestGameState {
     @Test
     public void testEvaluation() {
-        assertEquals("Should get 5.0 but have ", 5.0, GameState.evaluation(0.0f, 2.0f, 3.0f, 6.0f));
+        assertEquals("Should get 5.0 but have ", 5.0, GameState.evaluation(0, 2, 3, 6));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class TestGameState {
     @Test
     public void testGameOver(){
         Layout map = new Layout();
-        assertEquals("should get true but have ", true, GameState.isGameOver(100, 200, 100, 200, 2));
-        assertEquals("should get true but have ", true, GameState.isGameOver(100, 200, 200,300,0));
+        assertEquals("should get true but have ", true, GameState.isGameOver(100, 200, 100, 200, 250,50,12));
+        assertEquals("should get true but have ", true, GameState.isGameOver(100, 200, 200,300,0,0,0));
     }
 }

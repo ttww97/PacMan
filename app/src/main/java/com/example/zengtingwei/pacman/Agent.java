@@ -8,26 +8,25 @@ import android.util.Log;
 
 public class Agent {
     Bitmap bitmap;
-    float x;
-    float y;
+    int x;
+    int y;
 
-    public Agent(float x, float y){
+    public Agent(int x, int y){
         this.x = x;
         this.y = y;
     }
 
-
-    public Bitmap changeBitmapSize(Bitmap bit, int w, int h){
+    public Bitmap changeBitmapSize(Bitmap bit, float w, float h){
         int width = bit.getWidth();
         int height = bit.getHeight();
         Log.e("width", "width:" + width);
         Log.e("height", "height" + height);
 
-        int newWidth = w;
-        int newHeight = h;
+        float newWidth = w;
+        float newHeight = h;
 
-        float scaleWidth = ((float) newWidth)/width;
-        float scaleHeight = ((float) newHeight) / height;
+        float scaleWidth = newWidth / width;
+        float scaleHeight = newHeight / height;
 
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);
@@ -42,8 +41,16 @@ public class Agent {
 
     public void drawGhost(Canvas canvas, Bitmap bitmap){
         Paint ghost = new Paint();
-        bitmap = changeBitmapSize(bitmap, 50,50);
-        canvas.drawBitmap(bitmap, x, y, ghost);
+        bitmap = changeBitmapSize(bitmap, 0.036f*canvas.getWidth(),0.036f*canvas.getWidth());
+        canvas.drawBitmap(bitmap, x*0.036f*canvas.getWidth(), y*0.036f*canvas.getWidth(), ghost);
+    }
+
+    public Bitmap rotate(Bitmap bitmap, int angle){
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+
+        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        return bitmap;
     }
 
 }
