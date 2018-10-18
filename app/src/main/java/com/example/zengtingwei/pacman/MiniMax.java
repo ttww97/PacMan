@@ -18,6 +18,7 @@ public class MiniMax {
                 }
             }
         }
+        score += 1/Math.sqrt(Math.pow((agent_y-pac_y),2)+Math.pow((agent_x-pac_x),2));
         return score;
     }
     //minimize the score of opponents' move.

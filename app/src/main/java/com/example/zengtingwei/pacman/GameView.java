@@ -121,10 +121,10 @@ public class GameView extends View implements Runnable {
         }else {
             count ++;
             if(count%(speed*10) == 0){
-                Directions direction1 = MiniMax.generateDirection(ghost1.x,ghost1.y,player.x,player.y,map);
+                Directions direction1 = GameState.generateDirection(ghost1.x,ghost1.y,player.x,player.y,map);
                 ghost1.x = GameState.getNextX(ghost1.x,direction1);
                 ghost1.y = GameState.getNextY(ghost1.y,direction1);
-                Directions direction2 = MiniMax.generateDirection(ghost2.x,ghost2.y,player.x,player.y,map);
+                Directions direction2 = GameState.generateDirection(ghost2.x,ghost2.y,player.x,player.y,map);
                 ghost2.x = GameState.getNextX(ghost2.x,direction2);
                 ghost2.y = GameState.getNextY(ghost2.y,direction2);
                 player.startAngle = 10;
