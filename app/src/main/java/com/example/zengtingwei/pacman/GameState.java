@@ -1,7 +1,5 @@
 package com.example.zengtingwei.pacman;
 
-import android.graphics.Path;
-
 public class GameState {
     static boolean win = true;
     public GameState(){

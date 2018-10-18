@@ -25,7 +25,7 @@ public class GameView extends View implements Runnable {
     ArrayList<GameOver> observers;
     static public int speed = 1;
     private int count=0;
-    Agent ghost1 = new Agent(1,17);
+    Agent ghost1 = new Agent(26,1);
     Agent ghost2 = new Agent(26,19);
     Bitmap g1 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost1);
     Bitmap g2 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost2);
