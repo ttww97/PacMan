@@ -33,6 +33,7 @@ public class GameState {
         x=getNextX(x, direction);
         y=getNextY(y, direction);
 
+        if (x<0 || y<0 || x>27 || y>20) return false;
         return map.wall[y][x]!=1;
     }
 

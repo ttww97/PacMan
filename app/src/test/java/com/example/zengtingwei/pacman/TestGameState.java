@@ -2,6 +2,7 @@ package com.example.zengtingwei.pacman;
 
 import org.junit.Test;
 
+import static com.example.zengtingwei.pacman.GameState.generateDirection;
 import static com.example.zengtingwei.pacman.GameState.win;
 import static junit.framework.TestCase.assertEquals;
 
@@ -34,7 +35,10 @@ public class TestGameState {
         assertEquals("should get true but have "+GameState.isMoveLegal(1, 1, map, Directions.RIGHT), true, GameState.isMoveLegal(1, 1, map, Directions.RIGHT));
         map.wall[GameState.getNextY(1,Directions.RIGHT)][GameState.getNextX(1, Directions.RIGHT)]=1;
         //White-box test
-        assertEquals("Should get false but have "+GameState.isMoveLegal(1, 1, map, Directions.RIGHT), false, GameState.isMoveLegal(1, 1, map, Directions.RIGHT));
+        assertEquals("should get false but have "+GameState.isMoveLegal(1, 1, map, Directions.RIGHT), false, GameState.isMoveLegal(1, 1, map, Directions.RIGHT));
+        //White-box test out of bounds
+        assertEquals("should get false but have ", false, GameState.isMoveLegal(0, 0, map, Directions.UP));
+        assertEquals("should get false but have ", false, GameState.isMoveLegal(27, 20, map, Directions.DOWN));
     }
 
     @Test
@@ -66,5 +70,12 @@ public class TestGameState {
         assertEquals("should get true but have "+GameState.isGameOver(100, 200, 200,300,0,0,0), true, GameState.isGameOver(100, 200, 200,300,0,0,0));
         //White-box test
         assertEquals("should get true but have "+win, true, win);
+    }
+
+    @Test
+    public void testGenerateDirections() {
+        //Black-box test
+        Layout map = new Layout();
+        assertEquals("should get DOWN but have "+generateDirection(1, 3, 4, 7, map), Directions.DOWN, generateDirection(1, 3, 4, 7, map));
     }
 }
