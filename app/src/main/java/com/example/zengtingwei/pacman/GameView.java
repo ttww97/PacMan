@@ -25,12 +25,11 @@ public class GameView extends View implements Runnable {
     ArrayList<GameOver> observers;
     private int speed = 1;
     private int count=0;
-    Paint paint;
     Agent ghost1 = new Agent(1,17);
     Agent ghost2 = new Agent(26,19);
     Bitmap g1 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost1);
     Bitmap g2 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost2);
-    Layout map= new Layout();
+    Layout map;
     Directions direction = Directions.RIGHT;
     Player player;
     Handler timer;
@@ -40,6 +39,7 @@ public class GameView extends View implements Runnable {
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        map = new Layout();
         observers = new ArrayList<>();
         player = new Player(1,1);
         timer = new Handler();
