@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class GameView extends View implements Runnable {
 
     ArrayList<GameOver> observers;
-    private int speed = 1;
+    static public int speed = 1;
     private int count=0;
     Paint paint;
     Agent ghost1 = new Agent(1,17);
@@ -120,7 +120,7 @@ public class GameView extends View implements Runnable {
             notifyGameOver();
         }else {
             count ++;
-            if(count%(speed*10) == 0){
+            if(count%speed == 0){
                 Directions direction1 = GameState.generateDirection(ghost1.x,ghost1.y,player.x,player.y,map);
                 ghost1.x = GameState.getNextX(ghost1.x,direction1);
                 ghost1.y = GameState.getNextY(ghost1.y,direction1);
