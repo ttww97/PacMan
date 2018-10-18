@@ -147,5 +147,4 @@ public class GameView extends View implements Runnable {
     public boolean getWin(){
         return checkWin;
     }
-
 }
