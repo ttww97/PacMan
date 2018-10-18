@@ -16,12 +16,12 @@ public class EndActivity extends AppCompatActivity {
         setContentView(R.layout.activity_end);
         Intent it = getIntent();
         String score = it.getStringExtra("score");
-        TextView textView = (TextView) findViewById(R.id.textView);
+        TextView textView = findViewById(R.id.textView);
         textView.setTextColor(Color.WHITE);
         textView.setTextSize(30);
         textView.setText("Score: " + score);
 
-        TextView textView1 = (TextView) findViewById(R.id.textView2);
+        TextView textView1 = findViewById(R.id.textView2);
         textView1.setTextColor(Color.WHITE);
         textView1.setTextSize(30);
         String win = it.getStringExtra("win?");
