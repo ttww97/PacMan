@@ -8,7 +8,15 @@ public class GameState {
 
     }
     static public double evaluation(int agent_x,int agent_y,int pac_x,int pac_y){
-        return Math.sqrt(Math.pow((agent_y-pac_y),2)+Math.pow((agent_x-pac_x),2));
+        double dis = Math.sqrt(Math.pow((agent_y-pac_y),2)+Math.pow((agent_x-pac_x),2));
+        int x_min = agent_x<pac_x?agent_x:pac_x;
+        int x_max = agent_x>pac_x?agent_x:pac_x;
+        int y_min = agent_y<pac_y?agent_y:pac_y;
+        int y_max = agent_y>pac_y?agent_y:pac_y;
+//        for(int i = x_min;i<=x_max;i++){
+//            if(Layout.wall[][])
+//        }
+        return dis;
     }
     static public int getBeanNum(Layout map){
         int bean_num=0;
@@ -22,17 +30,14 @@ public class GameState {
         return bean_num;
     }
     static public boolean isMoveLegal(int x,int y, Layout map,Directions direction){
-        System.out.println("x = " + x + ", y = " +y);
         x=getNextX(x, direction);
         y=getNextY(y, direction);
-        if(map.wall[y][x]!=1){
-            return true;
-        }
-        return false;
+
+        return map.wall[y][x]!=1;
     }
 
     static public int getScore(int x,int y,Layout map){
-        int score = 0;
+        int score;
         score = map.wall[y][x];
         map.wall[y][x] = 0;
 
@@ -76,10 +81,10 @@ public class GameState {
     static public Directions generateDirection(int agent_x,int agent_y,int pac_x,int pac_y,Layout map){
         double min = 5000000;
         Directions direction= Directions.RIGHT;
-        double dis_up = evaluation(agent_x,agent_y-50,pac_x,pac_y);
-        double dis_down=evaluation(agent_x,agent_y+50,pac_x,pac_y);
-        double dis_left=evaluation(agent_x-50,agent_y,pac_x,pac_y);
-        double dis_right=evaluation(agent_x+50,agent_y,pac_x,pac_y);
+        double dis_up = evaluation(agent_x,agent_y-1,pac_x,pac_y);
+        double dis_down=evaluation(agent_x,agent_y+1,pac_x,pac_y);
+        double dis_left=evaluation(agent_x-1,agent_y,pac_x,pac_y);
+        double dis_right=evaluation(agent_x+1,agent_y,pac_x,pac_y);
         if(dis_up < min && isMoveLegal(agent_x,agent_y,map,Directions.UP)){
             min = dis_up;
             direction = Directions.UP;
@@ -92,7 +97,7 @@ public class GameState {
             min = dis_left;
             direction = Directions.LEFT;
         }
-        if(dis_right < min  && isMoveLegal(agent_x,agent_y,map,Directions.RIGHT)){
+        if(dis_right < min && isMoveLegal(agent_x,agent_y,map,Directions.RIGHT)){
             min = dis_right;
             direction = Directions.RIGHT;
         }
