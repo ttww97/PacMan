@@ -9,9 +9,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -21,56 +23,49 @@ import java.util.ArrayList;
 public class GameView extends View implements Runnable {
 
     ArrayList<GameOver> observers;
-    private int speed = 5;
+    private int speed = 1;
     private int count=0;
-    Bitmap pacman;
     Paint paint;
-    float pacX = 50;
-    float pacY = 50;
-    float agent1X = 50;
-    float agent1Y = 950;
-    float agent2X = 1300;
-    float agent2Y = 950;
+    Agent ghost1 = new Agent(1,17);
+    Agent ghost2 = new Agent(26,19);
+    Bitmap g1 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost1);
+    Bitmap g2 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost2);
     Layout map= new Layout();
     Directions direction = Directions.RIGHT;
-    Agent ghost1;
-    Agent ghost2;
     Player player;
     Handler timer;
+    boolean checkWin;
     int score = 0;
     int beanNo = 100;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         observers = new ArrayList<>();
-        pacman = BitmapFactory.decodeResource(getResources(), R.drawable.pacman);
-        player = new Player(pacman, pacX, pacY);
-        ghost1 = new Agent(agent1X,agent1Y);
-        ghost2 = new Agent(agent2X,agent2Y);
+        player = new Player(1,1);
         timer = new Handler();
         timer.postDelayed(this,10);
     }
 
     public void setMove(Directions direction){
         this.direction = direction;
-        int idx_j = (int)GameState.getNextX(pacX,direction)/50;
-        int idx_i = (int)GameState.getNextY(pacY,direction)/50;
-        if (GameState.isMoveLegal(pacX,pacY,map,direction)){
-            pacX = GameState.getNextX(pacX,direction);
-            pacY = GameState.getNextY(pacY,direction);
-            score += GameState.getScore(idx_i,idx_j,map);
+        if (GameState.isMoveLegal(player.x,player.y,map,direction)){
+            player.x = GameState.getNextX(player.x,direction);
+            player.y = GameState.getNextY(player.y,direction);
+            score += GameState.getScore(player.x,player.y,map);
             beanNo = GameState.getBeanNum(map);
         }
         this.invalidate();
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onDraw(Canvas canvas) {
         drawMap(canvas);
         drawBean(canvas);
-        drawPacman(canvas);
-        drawAgent(canvas);
+        player.drawPacman(canvas, direction);
+        ghost1.drawGhost(canvas, g1);
+        ghost2.drawGhost(canvas, g2);
         drawScore(canvas);
     }
     private void drawBean(Canvas canvas){
@@ -81,10 +76,10 @@ public class GameView extends View implements Runnable {
         for(int i=0;i<map.wall.length;i++){
             for(int j=0;j<map.wall[i].length;j++){
                 if(map.wall[i][j]==2){
-                    canvas.drawCircle(j*50+25,i*50+25,25,p1);
+                    canvas.drawCircle(j*0.036f*canvas.getWidth()+0.018f*canvas.getWidth(),i*0.036f*canvas.getWidth()+0.018f*canvas.getWidth(),0.018f*canvas.getWidth(),p1);
                 }
                 if(map.wall[i][j]==5){
-                    canvas.drawCircle(j*50+25,i*50+25,25,p2);
+                    canvas.drawCircle(j*0.036f*canvas.getWidth()+0.018f*canvas.getWidth(),i*0.036f*canvas.getWidth()+0.018f*canvas.getWidth(),0.018f*canvas.getWidth(),p2);
                 }
             }
         }
@@ -92,23 +87,8 @@ public class GameView extends View implements Runnable {
     private void drawScore(Canvas canvas){
         Paint p = new Paint();
         p.setColor(Color.BLACK);
-        p.setTextSize(100);
-        canvas.drawText("Score："+String.valueOf(score),800,1200,p);
-    }
-    private void drawPacman(Canvas canvas){
-        Paint p = new Paint();
-        pacman = changeBitmapSize(pacman, 50, 50);
-        canvas.drawBitmap(pacman, pacX,pacY,p);
-
-    }
-    private void drawAgent(Canvas canvas){
-        Paint ghost = new Paint();
-        Bitmap ghos1 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost1);
-        Bitmap ghos2 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost2);
-        ghos1 = changeBitmapSize(ghos1, 50,50);
-        ghos2 = changeBitmapSize(ghos2, 50,50);
-        canvas.drawBitmap(ghos1, agent1X, agent1Y, ghost);
-        canvas.drawBitmap(ghos2, agent2X, agent2Y, ghost);
+        p.setTextSize(0.05f*canvas.getWidth());
+        canvas.drawText("Score："+String.valueOf(score),0.75f*canvas.getWidth(),0.85f*canvas.getWidth(),p);
     }
 
     private void drawMap(Canvas canvas){
@@ -117,14 +97,16 @@ public class GameView extends View implements Runnable {
         for(int i=0;i<map.wall.length;i++){
             for(int j=0;j<map.wall[i].length;j++){
                 if(map.wall[i][j]==1){
-                    canvas.drawRect(j*map.wallsize,i*map.wallsize,(j+1)*map.wallsize,(i+1)*map.wallsize,p);
+                    canvas.drawRect(j*map.wallsize*canvas.getWidth(),i*map.wallsize*canvas.getWidth(),(j+1)*map.wallsize*canvas.getWidth(),(i+1)*map.wallsize*canvas.getWidth(),p);
                 }
             }
         }
     }
 
     private void notifyGameOver() {
-        for (GameOver o : observers) o.gameOver();
+        for (GameOver o : observers) {
+            o.gameOver();
+        }
     }
 
     public void registerGameOver(GameOver gameOver) {
@@ -133,51 +115,36 @@ public class GameView extends View implements Runnable {
 
     @Override
     public void run() {
-        if(GameState.isGameOver(pacX,pacY,agent1X,agent1Y,beanNo)) {
+        if(GameState.isGameOver(player.x,player.y,ghost1.x,ghost1.y,ghost2.x,ghost2.y,beanNo)) {
+            checkWin = GameState.win;
             notifyGameOver();
-        }
-        if(!GameState.isGameOver(pacX,pacY,agent1X,agent1Y,beanNo)) {
+        }else {
             count ++;
-            if(count%speed == 0){
-                Directions direction1 = GameState.generateDirection(agent1X,agent1Y,pacX,pacY,map);
-                agent1X = GameState.getNextX(agent1X,direction1);
-                agent1Y = GameState.getNextY(agent1Y,direction1);
-                Directions direction2 = GameState.generateDirection(agent2X,agent2Y,pacX,pacY,map);
-                agent2X = GameState.getNextX(agent2X,direction2);
-                agent2Y = GameState.getNextY(agent2Y,direction2);
+            if(count%(speed*10) == 0){
+                Directions direction1 = GameState.generateDirection(ghost1.x,ghost1.y,player.x,player.y,map);
+                ghost1.x = GameState.getNextX(ghost1.x,direction1);
+                ghost1.y = GameState.getNextY(ghost1.y,direction1);
+                Directions direction2 = GameState.generateDirection(ghost2.x,ghost2.y,player.x,player.y,map);
+                ghost2.x = GameState.getNextX(ghost2.x,direction2);
+                ghost2.y = GameState.getNextY(ghost2.y,direction2);
+                player.startAngle = 10;
+                player.sweepAngle = 340;
+                this.invalidate();
+            }
+             else {
+                player.startAngle = 45;
+                player.sweepAngle = 270;
                 this.invalidate();
             }
             this.postDelayed(this,100);
-    }}
-
-    public Bitmap rotate(Bitmap bitmap, int angle){
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-
-        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-        return bitmap;
+        }
     }
 
-    public Bitmap changeBitmapSize(Bitmap bit, int w, int h){
-        int width = bit.getWidth();
-        int height = bit.getHeight();
-        Log.e("width", "width:" + width);
-        Log.e("height", "height" + height);
+    public int getScore(){
+        return score;
+    }
 
-        int newWidth = w;
-        int newHeight = h;
-
-        float scaleWidth = ((float) newWidth)/width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        Matrix matrix = new Matrix();
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        bit = Bitmap.createBitmap(bit,0,0, width, height, matrix, true);
-        bit.getWidth();
-        bit.getHeight();
-        Log.e("newWidth", "newWidth:" + bit.getWidth());
-        Log.e("newHeight", "newHeight:" + bit.getHeight());
-        return bit;
+    public boolean getWin(){
+        return checkWin;
     }
 }
