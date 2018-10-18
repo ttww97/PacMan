@@ -54,4 +54,9 @@ public class GameActivity extends AppCompatActivity implements GameOver {
         gameView.setMove(directions);
     }
 
+    public void quit(View view) {
+        Intent it = new Intent(this, WelcomeActivity.class);
+        startActivity(it);
+        this.finish();
+    }
 }

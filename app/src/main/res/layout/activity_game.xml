@@ -22,6 +22,7 @@
         android:onClick="goUp"
         android:text="Up"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.317"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +35,8 @@
         android:onClick="goLeft"
         android:text="Left"
         app:layout_constraintRight_toLeftOf="@id/button4"
-        app:layout_constraintTop_toBottomOf="@id/button4" />
+        app:layout_constraintTop_toBottomOf="@id/button4"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <Button
         android:id="@+id/button6"
@@ -55,6 +57,16 @@
         app:layout_constraintLeft_toRightOf="@id/button5"
         app:layout_constraintRight_toLeftOf="@id/button6"
         app:layout_constraintTop_toBottomOf="@id/button5" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="quit"
+        android:onClick="quit"
+        app:layout_constraintBottom_toBottomOf="@id/button7"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button6"/>
 
 
 </android.support.constraint.ConstraintLayout>
