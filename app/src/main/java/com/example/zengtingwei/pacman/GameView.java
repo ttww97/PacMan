@@ -180,5 +180,4 @@ public class GameView extends View implements Runnable {
         Log.e("newHeight", "newHeight:" + bit.getHeight());
         return bit;
     }
-
 }

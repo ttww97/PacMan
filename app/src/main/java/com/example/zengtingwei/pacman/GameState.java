@@ -78,15 +78,15 @@ public class GameState {
             min = dis_up;
             direction = Directions.UP;
         }
-        if(dis_down < min  && isMoveLegal(agent_x,agent_y,map,Directions.DOWN)){
+        if(dis_down < min-10  && isMoveLegal(agent_x,agent_y,map,Directions.DOWN)){
             min = dis_down;
             direction = Directions.DOWN;
         }
-        if(dis_left < min  && isMoveLegal(agent_x,agent_y,map,Directions.LEFT)){
+        if(dis_left < min-10  && isMoveLegal(agent_x,agent_y,map,Directions.LEFT)){
             min = dis_left;
             direction = Directions.LEFT;
         }
-        if(dis_right < min  && isMoveLegal(agent_x,agent_y,map,Directions.RIGHT)){
+        if(dis_right < min-10 && isMoveLegal(agent_x,agent_y,map,Directions.RIGHT)){
             min = dis_right;
             direction = Directions.RIGHT;
         }
