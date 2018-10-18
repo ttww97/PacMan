@@ -30,17 +30,14 @@ public class GameState {
         return bean_num;
     }
     static public boolean isMoveLegal(int x,int y, Layout map,Directions direction){
-        System.out.println("x = " + x + ", y = " +y);
         x=getNextX(x, direction);
         y=getNextY(y, direction);
-        if(map.wall[y][x]!=1){
-            return true;
-        }
-        return false;
+
+        return map.wall[y][x]!=1;
     }
 
     static public int getScore(int x,int y,Layout map){
-        int score = 0;
+        int score;
         score = map.wall[y][x];
         map.wall[y][x] = 0;
 
