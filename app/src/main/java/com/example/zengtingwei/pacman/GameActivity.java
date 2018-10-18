@@ -24,8 +24,10 @@ public class GameActivity extends AppCompatActivity implements GameOver {
     public void gameOver() {
         Log.d("game","Game end");
         Intent intent = new Intent(this, EndActivity.class);
+        Intent intent2 = new Intent(this, RankActivity.class);
         Integer score = gameView.getScore();
         intent.putExtra("score", score.toString());
+        intent2.putExtra("score",score.toString());
         if (gameView.checkWin)
             intent.putExtra("win?", "You win!");
         else

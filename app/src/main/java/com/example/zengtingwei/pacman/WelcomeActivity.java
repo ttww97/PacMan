@@ -57,4 +57,9 @@ public class WelcomeActivity extends AppCompatActivity implements OnMenuItemClic
         }
         return false;
     }
+
+    public void showRank(View view) {
+        Intent intent = new Intent(this, RankActivity.class);
+        startActivity(intent);
+    }
 }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Pacman</string>
     <string name="title_activity_end">EndActivity</string>
+    <string name="title_activity_rank">RankActivity</string>
 </resources>
