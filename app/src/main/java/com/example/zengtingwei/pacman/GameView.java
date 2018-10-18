@@ -35,6 +35,7 @@ public class GameView extends View implements Runnable {
     Handler timer;
     boolean checkWin;
     int score = 0;
+    static public int score_rank=0;
     int beanNo = 100;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
@@ -117,6 +118,7 @@ public class GameView extends View implements Runnable {
     public void run() {
         if(GameState.isGameOver(player.x,player.y,ghost1.x,ghost1.y,ghost2.x,ghost2.y,beanNo)) {
             checkWin = GameState.win;
+            score_rank = score;
             notifyGameOver();
         }else {
             count ++;
