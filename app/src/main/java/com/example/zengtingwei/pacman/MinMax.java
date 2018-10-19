@@ -1,7 +1,7 @@
 package com.example.zengtingwei.pacman;
 
 //written by Zhisheng Ni, but it did not perform as good as we expect;
-public class MiniMax {
+public class MinMax {
     private static Directions action;
     private static double maxint = -1000;
     private static double minint = 1000;

@@ -7,7 +7,7 @@ import static com.example.zengtingwei.pacman.GameState.win;
 import static junit.framework.TestCase.assertEquals;
 
 /**
-written by Zhiyuan Xu,Zengting wei
+written by Zhiyuan Xu,Tingwei Zeng
  */
 public class TestGameState {
     @Test

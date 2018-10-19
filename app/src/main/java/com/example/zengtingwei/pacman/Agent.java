@@ -44,13 +44,4 @@ public class Agent {
         bitmap = changeBitmapSize(bitmap, 0.036f*canvas.getWidth(),0.036f*canvas.getWidth());
         canvas.drawBitmap(bitmap, x*0.036f*canvas.getWidth(), y*0.036f*canvas.getWidth(), ghost);
     }
-
-    public Bitmap rotate(Bitmap bitmap, int angle){
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-
-        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-        return bitmap;
-    }
-
 }
