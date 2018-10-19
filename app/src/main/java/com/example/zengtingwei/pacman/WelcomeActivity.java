@@ -11,6 +11,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 
+//written by Tingwei Zeng,Zhisheng Ni,Zhiyuan Xu
 public class WelcomeActivity extends AppCompatActivity implements OnMenuItemClickListener{
 
     @Override
@@ -19,6 +20,7 @@ public class WelcomeActivity extends AppCompatActivity implements OnMenuItemClic
         setContentView(R.layout.activity_welcome);
     }
 
+    //start the game activity
     public void startGame(View view){
         Log.d("game", "Game start");
         Intent intent = new Intent(this, GameActivity.class);
@@ -26,13 +28,16 @@ public class WelcomeActivity extends AppCompatActivity implements OnMenuItemClic
         this.finish();
     }
 
+    //show the instruction
     public void showHelp(View view) {
-        String text = "1.You can press the direction button to control your move.\n" +
-                      "2.You cannot encounter both red and blue goast,otherwise you loose\n" +
-                      "3.Red bean denotes 5 point, green bean denotes 1 point\n";
+        String text = "1.You can press the direction button to control the pac man.\n" +
+                      "2.You cannot encounter either red or blue goast,otherwise you lose\n" +
+                      "3.Red bean denotes 5 point, green bean denotes 1 point\n" +
+                      "4.Once you eat all beans, you win\n";
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
+    //popup the difficulty selection menu
     public void selectDifficulty(View view) {
         PopupMenu menu = new PopupMenu(this,view);
         getMenuInflater().inflate(R.menu.difficulty_menu, menu.getMenu());
@@ -41,6 +46,7 @@ public class WelcomeActivity extends AppCompatActivity implements OnMenuItemClic
     }
 
     @Override
+    //respond branch of menu
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.easy:
@@ -56,10 +62,5 @@ public class WelcomeActivity extends AppCompatActivity implements OnMenuItemClic
                 break;
         }
         return false;
-    }
-
-    public void showRank(View view) {
-        Intent intent = new Intent(this, RankActivity.class);
-        startActivity(intent);
     }
 }

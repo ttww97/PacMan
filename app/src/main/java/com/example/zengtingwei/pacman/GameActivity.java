@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+//Written by Tingwei Zeng
 public class GameActivity extends AppCompatActivity implements GameOver {
     Directions directions;
     GameView gameView;

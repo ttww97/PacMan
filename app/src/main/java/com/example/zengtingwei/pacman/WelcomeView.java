@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+//written by Tingwei Zeng, quote background from internet(referenced in wiki document)
 public class WelcomeView extends View {
 
     Bitmap myImage;
@@ -21,6 +22,7 @@ public class WelcomeView extends View {
         myImage = BitmapFactory.decodeResource(getResources(), R.drawable.pacback);
     }
 
+    //adjust the size of bitmap;
     public Bitmap changeBitmapSize(Bitmap bit, int w, int h){
         int width = bit.getWidth();
         int height = bit.getHeight();

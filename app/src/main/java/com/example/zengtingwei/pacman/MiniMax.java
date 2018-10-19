@@ -1,10 +1,11 @@
 package com.example.zengtingwei.pacman;
 
+//written by Zhisheng Ni, but it did not perform as good as we expect;
 public class MiniMax {
     private static Directions action;
     private static double maxint = -1000;
     private static double minint = 1000;
-    private static int Depth = 2;
+    private static int Depth = 1;
 
     //evaluate the score
     public static double evaluation(int agent_x,int agent_y,int pac_x,int pac_y,Layout map){
@@ -21,7 +22,7 @@ public class MiniMax {
         score += 1/Math.sqrt(Math.pow((agent_y-pac_y),2)+Math.pow((agent_x-pac_x),2));
         return score;
     }
-    //minimize the score of opponents' move.
+    //maximize the score of opponents' move.
     public static double maximize(int agent_x,int agent_y,int pac_x,int pac_y, double alpha,double beta,int depth,Layout map){
         if(depth==Depth){
             return(evaluation(agent_x,agent_y,pac_x,pac_y,map));
@@ -86,7 +87,7 @@ public class MiniMax {
         return v;
 
     }
-    // maximize the score of own move
+    //minimize the score of opponents' move.
     public static double minimize(int agent_x,int agent_y,int pac_x,int pac_y,double alpha,double beta,int depth, Layout map){
         if( depth==Depth){
             return(evaluation(agent_x,agent_y,pac_x,pac_y,map));

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+//written by Zhiyuan Xu, Tingwei Zeng
 public class EndActivity extends AppCompatActivity {
 
     @Override
@@ -34,6 +35,7 @@ public class EndActivity extends AppCompatActivity {
         Log.d("Menu", "Return to menu");
         Intent it = new Intent(this, WelcomeActivity.class);
         startActivity(it);
+        this.finish();
     }
 
     public void exit(View view) {

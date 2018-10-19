@@ -9,11 +9,11 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+//written by Tingwei Zeng,modified by Zhiyuan Xu
 
 public class Player {
     int x;
     int y;
-    Directions direction = Directions.RIGHT;
     int startAngle = 45;
     int sweepAngle = 270;
 
@@ -23,6 +23,7 @@ public class Player {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //draw pac man
     public void drawPacman(Canvas canvas, Directions direction){
         int rotate = 0;
         switch (direction){

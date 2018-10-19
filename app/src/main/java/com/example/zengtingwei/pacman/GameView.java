@@ -19,14 +19,14 @@ import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
-
+//This class is written by Tingwei Zeng, Zhiyuan Xu, Zhisheng Ni.
 public class GameView extends View implements Runnable {
 
     ArrayList<GameOver> observers;
-    static public int speed = 1;
+    static public int speed = 5;
     private int count=0;
-    Agent ghost1 = new Agent(26,1);
-    Agent ghost2 = new Agent(26,19);
+    Agent ghost1 = new Agent(1,1);
+    Agent ghost2 = new Agent(26,1);
     Bitmap g1 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost1);
     Bitmap g2 = BitmapFactory.decodeResource(getResources(), R.drawable.ghost2);
     Layout map;
@@ -35,18 +35,22 @@ public class GameView extends View implements Runnable {
     Handler timer;
     boolean checkWin;
     int score = 0;
-    static public int score_rank=0;
     int beanNo = 100;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         map = new Layout();
         observers = new ArrayList<>();
-        player = new Player(1,1);
+        player = new Player(13,19);
         timer = new Handler();
         timer.postDelayed(this,10);
     }
 
+    public int getScore(){
+        return score;
+    }
+
+    //respond to the touch of direction button
     public void setMove(Directions direction){
         this.direction = direction;
         if (GameState.isMoveLegal(player.x,player.y,map,direction)){
@@ -58,9 +62,9 @@ public class GameView extends View implements Runnable {
         this.invalidate();
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
+    //draw all elements in the view
     public void onDraw(Canvas canvas) {
         drawMap(canvas);
         drawBean(canvas);
@@ -69,6 +73,8 @@ public class GameView extends View implements Runnable {
         ghost2.drawGhost(canvas, g2);
         drawScore(canvas);
     }
+
+    //draw beans
     private void drawBean(Canvas canvas){
         Paint p1 = new Paint();
         Paint p2 = new Paint();
@@ -85,6 +91,8 @@ public class GameView extends View implements Runnable {
             }
         }
     }
+
+    //show the score
     private void drawScore(Canvas canvas){
         Paint p = new Paint();
         p.setColor(Color.BLACK);
@@ -92,6 +100,7 @@ public class GameView extends View implements Runnable {
         canvas.drawText("Score："+String.valueOf(score),0.75f*canvas.getWidth(),0.85f*canvas.getWidth(),p);
     }
 
+    //plot the map
     private void drawMap(Canvas canvas){
         Paint p = new Paint();
         p.setColor(Color.GRAY);
@@ -104,23 +113,26 @@ public class GameView extends View implements Runnable {
         }
     }
 
+    //notify game over
     private void notifyGameOver() {
         for (GameOver o : observers) {
             o.gameOver();
         }
     }
 
+    //register game over
     public void registerGameOver(GameOver gameOver) {
         observers.add(gameOver);
     }
 
     @Override
     public void run() {
+        //check whether game over
         if(GameState.isGameOver(player.x,player.y,ghost1.x,ghost1.y,ghost2.x,ghost2.y,beanNo)) {
             checkWin = GameState.win;
-            score_rank = score;
             notifyGameOver();
         }else {
+            //update game state
             count ++;
             if(count%speed == 0){
                 Directions direction1 = GameState.generateDirection(ghost1.x,ghost1.y,player.x,player.y,map);
@@ -129,6 +141,7 @@ public class GameView extends View implements Runnable {
                 Directions direction2 = GameState.generateDirection(ghost2.x,ghost2.y,player.x,player.y,map);
                 ghost2.x = GameState.getNextX(ghost2.x,direction2);
                 ghost2.y = GameState.getNextY(ghost2.y,direction2);
+                //animation of pac man
                 player.startAngle = 10;
                 player.sweepAngle = 340;
                 this.invalidate();
@@ -140,13 +153,5 @@ public class GameView extends View implements Runnable {
             }
             this.postDelayed(this,100);
         }
-    }
-
-    public int getScore(){
-        return score;
-    }
-
-    public boolean getWin(){
-        return checkWin;
     }
 }

@@ -1,21 +1,16 @@
 package com.example.zengtingwei.pacman;
 
+//written by Zhisheng Ni, modified by Zhiyuan Xu
 public class GameState {
     static boolean win = true;
-    public GameState(){
 
-    }
+    //evaluate the distance between pac man and ghost
     static public double evaluation(int agent_x,int agent_y,int pac_x,int pac_y){
         double dis = Math.sqrt(Math.pow((agent_y-pac_y),2)+Math.pow((agent_x-pac_x),2));
-        int x_min = agent_x<pac_x?agent_x:pac_x;
-        int x_max = agent_x>pac_x?agent_x:pac_x;
-        int y_min = agent_y<pac_y?agent_y:pac_y;
-        int y_max = agent_y>pac_y?agent_y:pac_y;
-//        for(int i = x_min;i<=x_max;i++){
-//            if(Layout.wall[][])
-//        }
         return dis;
     }
+
+    //count the number of beans
     static public int getBeanNum(Layout map){
         int bean_num=0;
         for(int i=0;i<map.wall.length;i++){
@@ -27,6 +22,8 @@ public class GameState {
         }
         return bean_num;
     }
+
+    //judge whether the move is valid
     static public boolean isMoveLegal(int x,int y, Layout map,Directions direction){
         x=getNextX(x, direction);
         y=getNextY(y, direction);
@@ -35,6 +32,7 @@ public class GameState {
         return map.wall[y][x]!=1;
     }
 
+    //get the score of single move and remove the bean
     static public int getScore(int x,int y,Layout map){
         int score;
         score = map.wall[y][x];
@@ -42,6 +40,8 @@ public class GameState {
 
         return score;
     }
+
+    //update the coordinates
     static public int getNextY(int y,Directions direction){
         switch(direction){
             case UP:
@@ -61,7 +61,7 @@ public class GameState {
         }
     }
 
-
+    //judge if the game is over and win or lose
     static public boolean isGameOver(int x,int y,int b_x,int b_y,int c_x, int c_y, int bean_num){
         if(bean_num==0){
             win = true;
@@ -77,6 +77,8 @@ public class GameState {
         }
         return false;
     }
+
+    //generate direction for ghost
     static public Directions generateDirection(int agent_x,int agent_y,int pac_x,int pac_y,Layout map){
         double min = 5000000;
         Directions direction= Directions.RIGHT;
